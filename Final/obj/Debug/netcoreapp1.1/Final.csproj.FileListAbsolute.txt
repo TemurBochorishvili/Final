@@ -1,0 +1,9 @@
+c:\users\temur\documents\visual studio 2017\Projects\Final\Final\bin\Debug\netcoreapp1.1\Final.deps.json
+c:\users\temur\documents\visual studio 2017\Projects\Final\Final\bin\Debug\netcoreapp1.1\Final.runtimeconfig.json
+c:\users\temur\documents\visual studio 2017\Projects\Final\Final\bin\Debug\netcoreapp1.1\Final.runtimeconfig.dev.json
+c:\users\temur\documents\visual studio 2017\Projects\Final\Final\bin\Debug\netcoreapp1.1\Final.dll
+c:\users\temur\documents\visual studio 2017\Projects\Final\Final\bin\Debug\netcoreapp1.1\Final.pdb
+c:\users\temur\documents\visual studio 2017\Projects\Final\Final\obj\Debug\netcoreapp1.1\Final.AssemblyInfo.cs
+c:\users\temur\documents\visual studio 2017\Projects\Final\Final\obj\Debug\netcoreapp1.1\Final.dll
+c:\users\temur\documents\visual studio 2017\Projects\Final\Final\obj\Debug\netcoreapp1.1\Final.pdb
+C:\Users\temur\Documents\Visual Studio 2017\Projects\Final\Final\obj\Debug\netcoreapp1.1\Final.csprojResolveAssemblyReference.cache
