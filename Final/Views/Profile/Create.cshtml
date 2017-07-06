@@ -1,0 +1,70 @@
+@model Final.Models.Profile
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Profile</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Email" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TotalLimit" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TotalLimit" class="form-control" />
+                <span asp-validation-for="TotalLimit" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LimitLeft" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="LimitLeft" class="form-control" />
+                <span asp-validation-for="LimitLeft" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SystemStatus" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SystemStatus" class="form-control" />
+                <span asp-validation-for="SystemStatus" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PeriodFrom" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PeriodFrom" class="form-control" />
+                <span asp-validation-for="PeriodFrom" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PeriodTill" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PeriodTill" class="form-control" />
+                <span asp-validation-for="PeriodTill" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

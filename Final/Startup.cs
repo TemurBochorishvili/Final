@@ -17,7 +17,7 @@ namespace Final
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(
-                    options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Temp"));
+                    options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Tempo"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();

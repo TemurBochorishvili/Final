@@ -11,6 +11,7 @@ namespace Final.Models
 
         public DbSet<Profile> Profiles { get; set; }
 
+        public DbSet<Final.Models.Identity.ProfileSearchResultViewModel> ProfileSearchResultViewModel { get; set; }
 
     }
 }
