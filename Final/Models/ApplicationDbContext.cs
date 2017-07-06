@@ -8,5 +8,9 @@ namespace Final.Models
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
+
+        public DbSet<Profile> Profiles { get; set; }
+
+
     }
 }

@@ -30,8 +30,8 @@ namespace Final.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                IdentityResult result = await _userManager.CreateAsync(user, model.Password); //psw md5 შიფრაციაზე გადაყვანა შეიძლება დამჭირდეს
+                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email,Profile = new Models.Profile() };
+                IdentityResult result = await _userManager.CreateAsync(user, model.Password); //psw md5 შიფრაციაზე თავისით გადაყავს
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false); // false -საიტის დახურვის შემდეგ აკეთებს ავტომატურ Log Out -ს
@@ -77,7 +77,7 @@ namespace Final.Controllers
         {
             return "Yes, You are loged in";
         }
-        // GET: /<controller>/
+
         public IActionResult Index()
         {
             return View();
