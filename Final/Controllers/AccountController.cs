@@ -1,15 +1,17 @@
-﻿using Final.Models.Identity;
+﻿using Final.Models;
+using Final.Models.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System;
 
 namespace Final.Controllers
 {
     public class AccountController : Controller
     {
-        //Dependency Injection with constructor
+        
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
 
@@ -30,20 +32,31 @@ namespace Final.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email,Profile = new Models.Profile() };
-                IdentityResult result = await _userManager.CreateAsync(user, model.Password); //psw md5 შიფრაციაზე თავისით გადაყავს
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Profile = new Profile
+                    {
+                        Email = model.Email,
+                        TotalLimit = 0,
+                        LimitLeft = 0,
+                        PeriodTill = default(DateTime),
+                        PeriodFrom = default(DateTime)
+                    }
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false); // false -საიტის დახურვის შემდეგ აკეთებს ავტომატურ Log Out -ს
-                    return RedirectToAction("Index", "Home"); // აბრუნებს Home კონტროლერის index - ზე    
+                    await _signInManager.SignInAsync(user, true); // false -საიტის დახურვის შემდეგ აკეთებს ავტომატურ Log Out -ს
+                    return RedirectToAction("Index", "Home"); // აბრუნებს Home კონტროლერის index - ზე
                 }
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty,error.Description);
-                }
-                
+                result.Errors.ToList().ForEach(error => ModelState.AddModelError(string.Empty, error.Description));
             }
+
             return View();
         }
 
@@ -72,7 +85,15 @@ namespace Final.Controllers
             return View();
         }
 
-        [Autorize]
+        [Authorize]
+        public async Task<IActionResult> LogOff()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home", null);
+        }
+
+        [Authorize]
         public string Check()
         {
             return "Yes, You are loged in";

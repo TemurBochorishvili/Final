@@ -10878,10 +10878,10 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\temur\\Documents\\Visual Studio 2017\\Projects\\Final\\Final\\Final.csproj",
+      "projectUniqueName": "C:\\Users\\temur\\documents\\visual studio 2017\\Projects\\Final\\Final\\Final.csproj",
       "projectName": "Final",
-      "projectPath": "C:\\Users\\temur\\Documents\\Visual Studio 2017\\Projects\\Final\\Final\\Final.csproj",
-      "outputPath": "C:\\Users\\temur\\Documents\\Visual Studio 2017\\Projects\\Final\\Final\\obj\\",
+      "projectPath": "C:\\Users\\temur\\documents\\visual studio 2017\\Projects\\Final\\Final\\Final.csproj",
+      "outputPath": "C:\\Users\\temur\\documents\\visual studio 2017\\Projects\\Final\\Final\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"

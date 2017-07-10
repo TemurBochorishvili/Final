@@ -15,7 +15,7 @@
         <div class="form-group">
             <label asp-for="Email" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" readonly/>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
         </div>
@@ -61,10 +61,6 @@
         </div>
     </div>
 </form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

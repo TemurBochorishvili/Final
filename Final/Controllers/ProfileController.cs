@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Final.Models;
 using Final.Models.Identity;
 using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
 
 namespace Final.Controllers
 {
@@ -41,23 +40,39 @@ namespace Final.Controllers
         [HttpPost]
         public IActionResult Search(ProfileSearchViewModel vm)
         {
-            List<ProfileSearchResultViewModel> result
-                                    = new List<ProfileSearchResultViewModel>();
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                result = (from p in _context.Profiles
-                          where p.Email == vm.Email
-                          select new ProfileSearchResultViewModel
-                          {
-                              Email = p.Email,
-                              TotalLimit = p.TotalLimit,
-                              LimitLeft = p.LimitLeft,
-                              SystemStatus = p.SystemStatus,
-                              PeriodFrom = p.PeriodFrom,
-                              PeriodTill = p.PeriodTill
-
-                          }).ToList();
+                return View();
             }
+
+            //result = (from p in _context.Profiles
+            //          where p.Email == vm.Email
+            //          select new ProfileSearchResultViewModel
+            //          {
+            //              Id = p.Id,
+            //              Email = p.Email,
+            //              TotalLimit = p.TotalLimit,
+            //              LimitLeft = p.LimitLeft,
+            //              SystemStatus = p.SystemStatus,
+            //              PeriodFrom = p.PeriodFrom,
+            //              PeriodTill = p.PeriodTill
+
+            //          }).ToList();
+
+            var result = _context.Profiles
+                .Where(p => p.Email == vm.Email)
+                .Select(p => new ProfileSearchResultViewModel
+                {
+                    Id = p.Id,
+                    Email = p.Email,
+                    TotalLimit = p.TotalLimit,
+                    LimitLeft = p.LimitLeft,
+                    SystemStatus = p.SystemStatus,
+                    PeriodFrom = p.PeriodFrom,
+                    PeriodTill = p.PeriodTill
+                })
+                .ToList();
+
             return View("Result", result);
         }
         //Create Profile
@@ -80,16 +95,14 @@ namespace Final.Controllers
         //}
 
         // GET: Profile/Edit/5
-        public async Task<IActionResult> Edit()
+        public async Task<IActionResult> Edit(int? id)
         {
-            ApplicationUser currentUser = await _userManager.GetUserAsync(User);
-            var profile = await _context.Profiles.SingleOrDefaultAsync(m => m.Id == currentUser.ProfileId);
+            var currentUser = await _userManager.GetUserAsync(User);
+            var profile = await _context.Profiles.SingleOrDefaultAsync(m => m.Id == id);
             return View(profile);
         }
 
         // POST: Profile/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("Id,Email,TotalLimit,LimitLeft,SystemStatus,PeriodFrom,PeriodTill")] Profile profile)
@@ -112,7 +125,7 @@ namespace Final.Controllers
                     //    throw;
                     //}
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             return View(profile);
         }
@@ -120,10 +133,10 @@ namespace Final.Controllers
         //GET: Profile/Delete/5
         //public async Task<IActionResult> Delete()
         //{
-        //    ApplicationUser currentUser = await _userManager.GetUserAsync(User);
+        //    var currentUser = await _userManager.GetUserAsync(User);
         //    var profile = await _context.Profiles
         //        .SingleOrDefaultAsync(m => m.Id == currentUser.ProfileId);
-        //    return View(profile);
+        //    return RedirectToAction("Index", "Home");
         //}
 
         //// POST: Profile/Delete/5
@@ -131,14 +144,14 @@ namespace Final.Controllers
         //[ValidateAntiForgeryToken]
         //public async Task<IActionResult> DeleteConfirmed()
         //{
-        //    ApplicationUser currentUser = await _userManager.GetUserAsync(User);
+        //    var currentUser = await _userManager.GetUserAsync(User);
         //    var profile = await _context.Profiles.SingleOrDefaultAsync(m => m.Id == currentUser.ProfileId);
         //    _context.Profiles.Remove(profile);
         //    await _context.SaveChangesAsync();
-        //    return RedirectToAction("Index");
+        //    return RedirectToAction("Index", "Home");
         //}
 
-        private bool ProfileExists(int id)
+        private bool ProfileExists(int? id)
         {
             return _context.Profiles.Any(e => e.Id == id);
         }
