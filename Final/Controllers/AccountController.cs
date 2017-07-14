@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using System.Security.Claims;
 
 namespace Final.Controllers
 {
@@ -50,6 +51,18 @@ namespace Final.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (model.IsAdministrator)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Administrator");
+                    }
+                    else if (model.IsUser)
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
+
+                    var profileClaim = new Claim("profile", user.Id.ToString(), ClaimValueTypes.Integer);
+                    await _userManager.AddClaimAsync(user, profileClaim);
+
                     await _signInManager.SignInAsync(user, true); // false -საიტის დახურვის შემდეგ აკეთებს ავტომატურ Log Out -ს
                     return RedirectToAction("Index", "Home"); // აბრუნებს Home კონტროლერის index - ზე
                 }

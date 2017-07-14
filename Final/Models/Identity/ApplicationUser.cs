@@ -9,6 +9,5 @@ namespace Final.Models.Identity
         public int ProfileId { get; set; }
         public Profile Profile { get; set; }
 
-
     }
 }

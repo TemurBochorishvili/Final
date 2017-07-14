@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Final.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -11,7 +12,15 @@ namespace Final.Models
 
         public DbSet<Profile> Profiles { get; set; }
 
-        public DbSet<Final.Models.Identity.ProfileSearchResultViewModel> ProfileSearchResultViewModel { get; set; }
+        public DbSet<ProfileSearchResultViewModel> ProfileSearchResultViewModel { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            // Customize the ASP.NET Identity model and override the defaults if needed.
+            // For example, you can rename the ASP.NET Identity table names and more.
+            // Add your customizations after calling base.OnModelCreating(builder);
+        }
     }
 }

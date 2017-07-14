@@ -7,3 +7,12 @@ c:\users\temur\documents\visual studio 2017\Projects\Final\Final\obj\Debug\netco
 c:\users\temur\documents\visual studio 2017\Projects\Final\Final\obj\Debug\netcoreapp1.1\Final.dll
 c:\users\temur\documents\visual studio 2017\Projects\Final\Final\obj\Debug\netcoreapp1.1\Final.pdb
 C:\Users\temur\Documents\Visual Studio 2017\Projects\Final\Final\obj\Debug\netcoreapp1.1\Final.csprojResolveAssemblyReference.cache
+E:\Final\Final\bin\Debug\netcoreapp1.1\Final.deps.json
+E:\Final\Final\bin\Debug\netcoreapp1.1\Final.runtimeconfig.json
+E:\Final\Final\bin\Debug\netcoreapp1.1\Final.runtimeconfig.dev.json
+E:\Final\Final\bin\Debug\netcoreapp1.1\Final.dll
+E:\Final\Final\bin\Debug\netcoreapp1.1\Final.pdb
+E:\Final\Final\obj\Debug\netcoreapp1.1\Final.csprojResolveAssemblyReference.cache
+E:\Final\Final\obj\Debug\netcoreapp1.1\Final.AssemblyInfo.cs
+E:\Final\Final\obj\Debug\netcoreapp1.1\Final.dll
+E:\Final\Final\obj\Debug\netcoreapp1.1\Final.pdb

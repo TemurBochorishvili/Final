@@ -26,5 +26,12 @@ namespace Final.Models.Identity
         public string ConfirmPassword { get; set; }
 
 
+        [Display(Name = "Is administrator")]
+        public bool IsAdministrator { get; set; }
+
+        [Display(Name = "Is user")]
+        public bool IsUser { get; set; }
+
+
     }
 }
