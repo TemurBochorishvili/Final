@@ -16,3 +16,12 @@ E:\Final\Final\obj\Debug\netcoreapp1.1\Final.csprojResolveAssemblyReference.cach
 E:\Final\Final\obj\Debug\netcoreapp1.1\Final.AssemblyInfo.cs
 E:\Final\Final\obj\Debug\netcoreapp1.1\Final.dll
 E:\Final\Final\obj\Debug\netcoreapp1.1\Final.pdb
+C:\Users\temur\Desktop\Final\Final\bin\Debug\netcoreapp1.1\Final.deps.json
+C:\Users\temur\Desktop\Final\Final\bin\Debug\netcoreapp1.1\Final.runtimeconfig.json
+C:\Users\temur\Desktop\Final\Final\bin\Debug\netcoreapp1.1\Final.runtimeconfig.dev.json
+C:\Users\temur\Desktop\Final\Final\bin\Debug\netcoreapp1.1\Final.dll
+C:\Users\temur\Desktop\Final\Final\bin\Debug\netcoreapp1.1\Final.pdb
+C:\Users\temur\Desktop\Final\Final\obj\Debug\netcoreapp1.1\Final.csprojResolveAssemblyReference.cache
+C:\Users\temur\Desktop\Final\Final\obj\Debug\netcoreapp1.1\Final.AssemblyInfo.cs
+C:\Users\temur\Desktop\Final\Final\obj\Debug\netcoreapp1.1\Final.dll
+C:\Users\temur\Desktop\Final\Final\obj\Debug\netcoreapp1.1\Final.pdb

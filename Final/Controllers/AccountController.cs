@@ -7,12 +7,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace Final.Controllers
 {
     public class AccountController : Controller
     {
-        
+
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
 
@@ -51,20 +56,9 @@ namespace Final.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (model.IsAdministrator)
-                    {
-                        await _userManager.AddToRoleAsync(user, "Administrator");
-                    }
-                    else if (model.IsUser)
-                    {
-                        await _userManager.AddToRoleAsync(user, "User");
-                    }
-
-                    var profileClaim = new Claim("profile", user.Id.ToString(), ClaimValueTypes.Integer);
-                    await _userManager.AddClaimAsync(user, profileClaim);
-
-                    await _signInManager.SignInAsync(user, true); // false -საიტის დახურვის შემდეგ აკეთებს ავტომატურ Log Out -ს
-                    return RedirectToAction("Index", "Home"); // აბრუნებს Home კონტროლერის index - ზე
+                    ModelState.AddModelError(string.Empty, "Error");
+                    await _signInManager.SignInAsync(user, true);
+                    return RedirectToAction("Index", "Home"); 
                 }
 
                 result.Errors.ToList().ForEach(error => ModelState.AddModelError(string.Empty, error.Description));
@@ -85,13 +79,31 @@ namespace Final.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+
                 if (result.Succeeded)
                 {
+                    var now = DateTime.UtcNow;
+
+                    var jwt = new JwtSecurityToken(
+                            issuer: AuthOptions.ISSUER,
+                            audience: AuthOptions.AUDIENCE,
+                            notBefore: now,
+                            expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256)
+                    );
+
+                    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+                    var response = new
+                    {
+                        access_token = encodedJwt,
+                        username = model.Email
+                    };
+
+                    Response.ContentType = "application/json";
+                    //await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+
                     return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid Loging Attemp...");
                 }
             }
 

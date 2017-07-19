@@ -4,15 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Final.Models
 {
-    //შეიძლება გაკეთდეს Enum ები : სისტემებისთვის 
-    /*
-     * public enum SystemType
-     * {
-     *  1,
-     *  2,
-     *  3
-     * }
-     * */
     public class Profile
     {
         public int Id { get; set; }
