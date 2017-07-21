@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Final.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Final.Services;
 
 namespace Final
 {
@@ -18,6 +19,16 @@ namespace Final
             {
                 options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Tempo");
                 options.UseOpenIddict();
+            });
+
+            services.AddScoped<IJwtIssuer, JwtIssuer>();
+
+            services.Configure<JwtIssuerOptions>(options =>
+            {
+                options.Issuer = "Project";
+                options.Audience = "http://localhost:5000/";
+                options.Lifetime = 10;
+                options.Key = "mysupersecret_secretkey!123";
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()

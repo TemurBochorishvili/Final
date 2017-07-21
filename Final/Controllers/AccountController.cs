@@ -6,12 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+using Final.Services;
+using System.Security.Claims;
 
 namespace Final.Controllers
 {
@@ -20,11 +18,16 @@ namespace Final.Controllers
 
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
+        private ApplicationDbContext _dbContext;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private IJwtIssuer _jwtIssuer;
+
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext dbContext, IJwtIssuer jwtIssuer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _dbContext = dbContext;
+            _jwtIssuer = jwtIssuer;
         }
 
         [HttpGet]
@@ -58,7 +61,7 @@ namespace Final.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "Error");
                     await _signInManager.SignInAsync(user, true);
-                    return RedirectToAction("Index", "Home"); 
+                    return RedirectToAction("Index", "Home");
                 }
 
                 result.Errors.ToList().ForEach(error => ModelState.AddModelError(string.Empty, error.Description));
@@ -82,28 +85,22 @@ namespace Final.Controllers
 
                 if (result.Succeeded)
                 {
-                    var now = DateTime.UtcNow;
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    var profile = _dbContext.Profiles.Single(p => p.Id == user.ProfileId);
 
-                    var jwt = new JwtSecurityToken(
-                            issuer: AuthOptions.ISSUER,
-                            audience: AuthOptions.AUDIENCE,
-                            notBefore: now,
-                            expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256)
-                    );
-
-                    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+                    var jwt = _jwtIssuer.IssueJwt(new[] {
+                        new Claim("username", user.UserName),
+                        new Claim("email", user.Email),
+                        new Claim("totalLimit", profile.TotalLimit.ToString())
+                    });
 
                     var response = new
                     {
-                        access_token = encodedJwt,
+                        access_token = jwt,
                         username = model.Email
                     };
 
-                    Response.ContentType = "application/json";
-                    //await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
-
-                    return RedirectToAction("Index", "Home");
+                    return Ok(response);
                 }
             }
 
